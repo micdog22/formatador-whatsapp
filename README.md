@@ -1,4 +1,4 @@
-# Formatador para WhatsApp — escreva em Markdown e cole no WhatsApp já formatado (HTML + JS)
+# Formatador para WhatsApp: escreva em Markdown e cole no WhatsApp já formatado (HTML + JS)
 
 Quem escreve em Markdown (no GitHub, no Notion, em documentação) sabe que colar o texto no WhatsApp quebra a formatação: `**negrito**` aparece com asteriscos duplos e títulos com `#`. Este formatador converte o Markdown para a sintaxe do WhatsApp, mostra uma pré-visualização parecida com uma conversa e ainda gera links `wa.me` com a mensagem pronta. Também faz o caminho inverso: WhatsApp para Markdown.
 
@@ -74,6 +74,6 @@ Issues e pull requests são bem-vindos.
 
 ## Licença
 
-MIT — veja [LICENSE](LICENSE).
+MIT. Veja [LICENSE](LICENSE).
 
 Projeto independente, sem vínculo com o WhatsApp ou a Meta.

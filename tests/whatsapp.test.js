@@ -127,7 +127,7 @@ test('conta caracteres e palavras', () => {
   assert.deepEqual(countText(''), { chars: 0, words: 0 });
   assert.deepEqual(countText('Olá, mundo!'), { chars: 11, words: 2 });
   // Emoji com tom de pele conta como 1 caractere; símbolos soltos não são palavras.
-  assert.deepEqual(countText('Oi 👍🏽 — R$ 10,50'), { chars: 15, words: 3 });
+  assert.deepEqual(countText('Oi 👍🏽 \u2014 R$ 10,50'), { chars: 15, words: 3 });
 });
 
 test('normaliza telefones brasileiros', () => {
