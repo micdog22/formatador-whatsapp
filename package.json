@@ -1,0 +1,11 @@
+{
+  "name": "formatador-whatsapp",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Escreva em Markdown e cole no WhatsApp já formatado, com pré-visualização e gerador de link wa.me",
+  "type": "module",
+  "scripts": { "test": "node --test" },
+  "license": "MIT",
+  "repository": { "type": "git", "url": "git+https://github.com/micdog22/formatador-whatsapp.git" },
+  "homepage": "https://micdog22.github.io/formatador-whatsapp/"
+}

@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Formatador para WhatsApp — escreva em Markdown e cole já formatado</title>
+  <meta name="description" content="Escreva em Markdown e cole no WhatsApp já formatado: negrito, itálico, tachado, listas, citações e código. Com pré-visualização, contador e gerador de link wa.me.">
+  <meta name="theme-color" content="#15803d">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💬</text></svg>">
+  <link rel="stylesheet" href="./styles.css">
+  <script type="module" src="./src/app.js"></script>
+</head>
+<body>
+  <header class="site-header">
+    <h1>Formatador para WhatsApp</h1>
+    <p class="lead">Escreva em Markdown e cole no WhatsApp já formatado. Também faz o caminho inverso e gera links wa.me.</p>
+  </header>
+
+  <main>
+    <div class="layout">
+      <section class="card" aria-labelledby="editor-title">
+        <div class="card-head">
+          <h2 id="editor-title">Editor</h2>
+          <div class="segmented" role="radiogroup" aria-label="Direção da conversão">
+            <input type="radio" name="mode" id="mode-markdown" value="markdown"><label for="mode-markdown">Markdown → WhatsApp</label>
+            <input type="radio" name="mode" id="mode-whatsapp" value="whatsapp"><label for="mode-whatsapp">WhatsApp → Markdown</label>
+          </div>
+        </div>
+        <div class="toolbar" role="toolbar" aria-label="Formatação" aria-controls="editor">
+          <button type="button" class="tool" data-action="bold" title="Negrito (Ctrl+B)" aria-label="Negrito"><b>N</b></button>
+          <button type="button" class="tool" data-action="italic" title="Itálico (Ctrl+I)" aria-label="Itálico"><i>I</i></button>
+          <button type="button" class="tool" data-action="strike" title="Tachado" aria-label="Tachado"><s>T</s></button>
+          <button type="button" class="tool" data-action="mono" title="Monoespaçado" aria-label="Monoespaçado"><span class="mono">M</span></button>
+          <button type="button" class="tool" data-action="code" title="Código inline" aria-label="Código inline"><span class="mono">&lt;/&gt;</span></button>
+          <span class="tool-sep" aria-hidden="true"></span>
+          <button type="button" class="tool" data-action="bullet" title="Lista" aria-label="Lista">• Lista</button>
+          <button type="button" class="tool" data-action="numbered" title="Lista numerada" aria-label="Lista numerada">1. Lista</button>
+          <button type="button" class="tool" data-action="quote" title="Citação" aria-label="Citação">❝ Citação</button>
+        </div>
+        <label for="editor" class="sr-only" id="editor-label">Texto em Markdown</label>
+        <textarea id="editor" rows="15" spellcheck="true" aria-describedby="editor-count"></textarea>
+        <div class="row">
+          <p class="counter" id="editor-count"></p>
+          <div class="actions">
+            <button type="button" class="btn secondary small" id="example">Exemplo</button>
+            <button type="button" class="btn secondary small" id="clear">Limpar</button>
+          </div>
+        </div>
+      </section>
+
+      <section class="card" aria-labelledby="preview-title">
+        <h2 id="preview-title">Pré-visualização</h2>
+        <div class="chat">
+          <div class="bubble">
+            <div id="preview" class="bubble-text"></div>
+            <span class="meta"><span id="time"></span> <span aria-hidden="true">✓✓</span></span>
+          </div>
+        </div>
+        <p class="hint">Uma aproximação de como a mensagem aparece numa conversa.</p>
+      </section>
+    </div>
+
+    <section class="card" aria-labelledby="result-title">
+      <div class="card-head">
+        <h2 id="result-title">Resultado</h2>
+        <span class="muted" id="result-kind">Texto pronto para colar no WhatsApp</span>
+      </div>
+      <label for="output" class="sr-only">Resultado da conversão</label>
+      <textarea id="output" rows="9" readonly aria-describedby="output-count"></textarea>
+      <div class="row">
+        <p class="counter" id="output-count"></p>
+        <button type="button" class="btn" id="copy">Copiar</button>
+      </div>
+      <p class="status" id="copy-status" role="status" aria-live="polite"></p>
+    </section>
+
+    <section class="card" aria-labelledby="link-title">
+      <h2 id="link-title">Link do WhatsApp (wa.me)</h2>
+      <p class="muted intro">Gere um link que abre uma conversa com o número, já com a mensagem escrita. Só números do Brasil, com DDD.</p>
+      <div class="link-grid">
+        <div>
+          <label for="phone">Telefone com DDD</label>
+          <input id="phone" type="tel" inputmode="tel" autocomplete="off" placeholder="(19) 99999-9999" aria-describedby="phone-status">
+          <p class="field-status" id="phone-status" aria-live="polite"></p>
+        </div>
+        <label class="check"><input type="checkbox" id="include-message"> Incluir a mensagem do editor</label>
+      </div>
+      <label for="link">Link gerado</label>
+      <div class="link-row">
+        <input id="link" type="text" readonly placeholder="Informe um telefone válido">
+        <button type="button" class="btn" id="copy-link">Copiar link</button>
+        <a class="btn secondary" id="open-link" target="_blank" rel="noopener noreferrer">Abrir</a>
+      </div>
+      <p class="status" id="link-status" role="status" aria-live="polite"></p>
+    </section>
+
+    <section class="card" aria-labelledby="guide-title">
+      <h2 id="guide-title">Como cada formatação é convertida</h2>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th scope="col">Markdown</th><th scope="col">WhatsApp</th></tr></thead>
+          <tbody>
+            <tr><td><code>**negrito**</code> ou <code>__negrito__</code></td><td><code>*negrito*</code></td></tr>
+            <tr><td><code>*itálico*</code> ou <code>_itálico_</code></td><td><code>_itálico_</code></td></tr>
+            <tr><td><code>~~tachado~~</code></td><td><code>~tachado~</code></td></tr>
+            <tr><td>bloco <code>```</code> em várias linhas</td><td><code>```monoespaçado```</code></td></tr>
+            <tr><td><code>`código`</code></td><td><code>`código`</code></td></tr>
+            <tr><td><code>- item</code> ou <code>* item</code></td><td><code>- item</code></td></tr>
+            <tr><td><code>1. item</code></td><td><code>1. item</code></td></tr>
+            <tr><td><code>&gt; citação</code></td><td><code>&gt; citação</code></td></tr>
+            <tr><td><code># Título</code></td><td><code>*Título*</code></td></tr>
+            <tr><td><code>[texto](https://…)</code></td><td><code>texto (https://…)</code></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="hint">O que está dentro de código nunca é alterado. Projeto independente, sem vínculo com o WhatsApp ou a Meta.</p>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>Tudo roda no seu navegador. Código aberto no <a href="https://github.com/micdog22/formatador-whatsapp">GitHub</a> · Licença MIT</p>
+  </footer>
+</body>
+</html>
